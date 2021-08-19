@@ -1,9 +1,9 @@
 const express = require("express");
 const Meals = require("../models/Meals");
 
-const router = app.Router();
+const router = express.Router();
 
-router.get("/", (res, res) => {
+router.get("/", (req, res) => {
   Meals.find()
     .exec()
     .then((m) => res.status(200).send(m));
@@ -15,11 +15,11 @@ router.get("/:id", (req, res) => {
     .then((m) => res.status(200).send(m));
 });
 
-router.post("/", (res, res) => {
+router.post("/", (req, res) => {
   Meals.create(req.body).then((m) => res.status(201).send(m));
 });
 
-router.put("/:id", (res, res) => {
+router.put("/:id", (req, res) => {
   Meals.findOneAndUpdate(req.params.id, req.body).then(() =>
     res.sendStatus(204)
   );

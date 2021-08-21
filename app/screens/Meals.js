@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { View, StyleSheet, FlatList, Text } from "react-native";
 import ListItem from "../components/ListItem";
+import useFetch from '../hooks/useFetch'
 
 const styles = StyleSheet.create({
   container: {
@@ -15,21 +16,8 @@ const styles = StyleSheet.create({
 });
 
 const Meals = ({ navigation }) => {
-  const [loading, setLoading] = useState(true);
-  const [meals, setMeals] = useState([]);
 
-  const fetchMeals = async () => {
-    const response = await fetch(
-      "https://menu-lunch-api-miguelromero717.vercel.app/api/meals"
-    );
-    const data = await response.json();
-    setMeals(data);
-    setLoading(false);
-  };
-
-  useEffect(() => {
-    fetchMeals();
-  }, []);
+  const {loading, data} = useFetch('https://menu-lunch-api-miguelromero717.vercel.app/api/meals')
 
   return (
     <View style={styles.container}>
@@ -38,7 +26,7 @@ const Meals = ({ navigation }) => {
       ) : (
         <FlatList
           style={styles.list}
-          data={meals}
+          data={data}
           keyExtractor={(d) => d._id}
           renderItem={({ item }) => (
             <ListItem

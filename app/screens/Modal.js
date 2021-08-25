@@ -1,6 +1,7 @@
 import React from "react";
 import { View, Text, StyleSheet, Button } from "react-native";
 import useFetch from "../hooks/useFetch";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const styles = StyleSheet.create({
   container: {
@@ -25,17 +26,21 @@ export default ({ navigation }) => {
           <Text>{data._id}</Text>
           <Text>{data.name}</Text>
           <Text>{data.description}</Text>
-          <Button title="Accept" onPress={() => {
+          <Button title="Accept" onPress={async () => {
+            const token = await AsyncStorage('token')
             fetch(`https://menu-lunch-api-miguelromero717.vercel.app/api/orders`, {
               method: 'POST',
               headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'authorization': token
               },
               body: JSON.stringify({
                 meal_id: id,
                 user_id: '112233'
               })
-            }).then(() => {
+            }).then((t) => {
+              if (t.status !== 201)
+                return alert('Order could not be generated')
               alert('Order generated successfully')
               navigation.navigate('Meals')
             })

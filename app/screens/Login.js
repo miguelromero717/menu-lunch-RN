@@ -28,8 +28,8 @@ export default ({navigation}) => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Login</Text>
-      <TextInput style={styles.input}/>
-      <TextInput style={styles.input}/>
+      <TextInput style={styles.input} placeholder="Email"/>
+      <TextInput style={styles.input} placeholder="Password" />
       <Button title="Login" onPress={() => {}} />
       <Button title="Register" onPress={() => {navigation.navigate('Register')}} />
     </View>
